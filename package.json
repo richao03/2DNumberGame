@@ -1,22 +1,14 @@
 {
-  "name": "PunchApp",
+  "name": "ShootApp",
   "version": "1.0.0",
-  "description": "JS Motion Detection punching app",
+  "description": "shooting game",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ReallyGood/js-motion-detection.git"
-  },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ReallyGood/js-motion-detection/issues"
-  },
-  "homepage": "https://github.com/ReallyGood/js-motion-detection#readme",
   "dependencies": {
     "angular": "^1.5.8",
     "express": "^4.13.3",

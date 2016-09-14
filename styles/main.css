@@ -1,0 +1,467 @@
+body {
+	background: #fff;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 12px;
+	padding: 0;
+	margin: 0;
+	color: #333;
+}
+
+.black-background {
+	background-color:#778899;
+	-webkit-transition: background-color 400ms ease 600ms;
+	-moz-transition: background-color 400ms ease 600ms;
+	-o-transition: background-color 400ms ease 600ms;
+	-ms-transition: background-color 400ms ease 600ms;
+	transition: background-color 400ms ease 600ms;
+}
+
+video {
+	display: none;
+}
+
+#container {
+
+}
+
+#content {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	overflow: hidden;
+	z-index: 0;
+}
+
+.loading {
+	display: none;
+	position: absolute;
+	font-size: 20px;
+	text-align: center;
+	width: 200px;
+	left: 50%;
+	margin-left: -100px;
+	top: 50%;
+	margin-top: -40px;
+}
+
+.browsers,
+.introduction {
+	display: none;
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	font-size: 20px;
+	top: 50%;
+	margin-top: -27px;
+}
+
+.browsers p,
+.introduction p {
+	margin: 0 0 0.1em 0;
+	padding: 0;
+}
+
+.browsers a {
+	color: #333;
+}
+
+#header {
+	position: absolute;
+	height: 55px;
+	top: 0;
+	left: 0;
+	right: 0;
+	overflow: hidden;
+	z-index: 2;
+	color: #aaa;
+	font-size: 20px;
+}
+
+.browsersWithVideo,
+.instructions,
+.allow {
+	display: none;
+	line-height: 55px;
+	margin-left: 20px;
+}
+
+.browsersWithVideo {
+	font-size: 15px;
+}
+
+.highScoreBoard{
+    position: absolute;
+    right: 25px;
+    padding: 10px;
+}
+
+.browsersWithVideo a {
+	color: #AAA;
+}
+
+#start{
+  margin-top: 35px;
+  margin-bottom:35px;
+}
+
+.backFromVideo {
+	display: none;
+	position: absolute;
+	width: 100%;
+	bottom: 64px;
+	text-align: center;
+	font-size: 14px;
+}
+
+.backFromVideo a {
+	color: #333;
+}
+#HP{
+  margin-top: 40px;
+  margin-bottom: 40px
+}
+#footer {
+	position: absolute;
+	height: 55px;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	overflow: hidden;
+	z-index: 1;
+}
+
+#footer a {
+	color: #aaa;
+	text-decoration: underline;
+}
+
+#customCombos{
+margin-top:20px;
+
+}
+
+#setCombos{
+  margin-top: 20px
+}
+
+#levelSelect{
+  margin-top:20px;
+}
+
+#footer a:hover {
+	color: #ccd56d;
+	text-decoration: underline;
+}
+
+.magic {
+	float: left;
+	padding-left: 20px;
+	font-size: 20px;
+	color: #AAA;
+	line-height: 55px;
+}
+
+#video-demo {
+	display: none;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -320px;
+	margin-top: -240px;
+}
+
+#canvas-source {
+	width: 100%;
+}
+
+#canvas-source, #canvas-highlights {
+	display: none;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+#canvas-blended {
+	display: none;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	opacity: 0;
+}
+
+#hotSpots {
+	position: relative;
+	display: none;
+	height: 100%;
+}
+
+#hotSpots > * {
+	position: absolute;
+	-moz-transition: all 80ms linear;
+	-webkit-transition: all 80ms linear;
+	transition: all 80ms linear;
+}
+
+/* Feel free to change this or turn it off altogether*/
+.active {
+	-moz-transition: all 150ms linear;
+	-webkit-transition: all 150ms linear;
+	transition: all 150ms linear;
+}
+
+.hitbox{
+background-image: url(https://tcrf.net/images/6/64/Ds-cone.gif);
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.target {
+  background-image: url("../videos/target.png");
+  background-position: 14px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  -moz-transition: all 150ms linear;
+  -webkit-transition: all 150ms linear;
+  transition: all 150ms linear;
+}
+
+.bonusTime{
+  background-image: url("../videos/bonusClock.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  -moz-transition: all 150ms linear;
+  -webkit-transition: all 150ms linear;
+  transition: all 150ms linear;
+}
+
+.bonusTarget{
+    background-image: url("../videos/bonusTarget.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  -moz-transition: all 150ms linear;
+  -webkit-transition: all 150ms linear;
+  transition: all 150ms linear;
+}
+
+.missed{
+  background-image: url("../videos/pow.gif");
+  background-size: contain;
+  background-repeat: no-repeat;
+  -moz-transition: all 150ms linear;
+  -webkit-transition: all 150ms linear;
+  transition: all 150ms linear;
+}
+
+.danger{
+  background-image: url("../videos/boxingGlove.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+/* Sample hotspots */
+
+
+
+#target1,#target2,#target3,#target4,#target5{
+  width: 11%;
+  height: 20%;
+  left: 0;
+}
+
+#target1 {
+  top: 0%;
+}
+
+#target2 {
+  top: 20%;
+}
+
+#target3 {
+  top: 40%;
+}
+
+#target4 {
+  top: 60%;
+}
+
+
+
+#_1b, #_2b,#_3b,#_4b,#_5b,#_6b,#_7b,#_8b,#_9b,#_10b,#_11b,#_12b,#_13b,#_14b,#_15b{
+  width: 15%;
+  height: 15%;
+  top: 1px;
+
+}
+
+#_1b {
+  left: 0%;
+}
+
+#_2b {
+  left: 6%;
+}
+
+#_3b {
+  left: 12%;
+}
+
+#_4b {
+  left: 18%;
+}
+
+#_5b {
+  left: 24%;
+}
+
+#_6b {
+  left: 30%;
+}
+
+#_7b {
+  left: 36%;
+}
+
+#_8b {
+  left: 42%;
+}
+
+#_9b {
+  left: 48%;
+}
+
+#_10b {
+  left: 54%;
+}
+
+#_11b {
+  left: 60%;
+}
+
+#_12b {
+  left: 66%;
+}
+
+#_13b {
+  left: 72%;
+}
+
+#_14b {
+  left: 78%;
+}
+
+#_15b {
+  left: 84%;
+}
+
+
+
+#_1d, #_2d,#_3d,#_4d,#_5d,#_6d,#_7d,#_8d,#_9d,#_10d,#_11d,#_12d,#_13d,#_14d,#_15d{
+  width: 5%;
+  height: 5%;
+  top: 12%;
+
+}
+
+#_1d {
+  left: 12%;
+}
+
+#_2d {
+  left: 18%;
+}
+
+#_3d {
+  left: 24%;
+}
+
+#_4d {
+  left: 30%;
+}
+
+#_5d {
+  left: 36%;
+}
+
+#_6d {
+  left: 42%;
+}
+
+#_7d {
+  left: 48%;
+}
+
+#_8d {
+  left: 54%;
+}
+
+#_9d {
+  left: 60%;
+}
+
+#_10d {
+  left: 66%;
+}
+
+#_11d {
+  left: 72%;
+}
+
+#_12d {
+  left: 78%;
+}
+
+#_13d {
+  left: 84%;
+}
+
+#_14d {
+  left: 90%;
+}
+
+#_15d {
+  left: 96%;
+}
+
+
+#bonusDiv{
+ float:right;
+ width: 10%;
+
+}
+
+#icon{
+padding-top:70px;
+  width: 70%;
+  height: 70%;
+  top:1px;
+}
+
+
+#bonus1, #bonus2,#bonus3,#bonus4{
+  width: 20%;
+  height: 20%;
+  top:1px;
+
+}
+
+#bonus1 {
+  left: 12%;
+}
+
+#bonus2 {
+  left: 32%;
+}
+
+#bonus3 {
+  left: 52%;
+}
+
+#bonus4 {
+  left: 72%;
+}
+
+
+
+

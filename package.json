@@ -20,7 +20,11 @@
   "dependencies": {
     "angular": "^1.5.8",
     "express": "^4.13.3",
+    "gulp": "^3.9.1",
     "phaser": "^2.6.2",
     "sequelize": "^3.23.6"
+  },
+  "devDependencies": {
+    "gulp-concat": "^2.6.0"
   }
 }

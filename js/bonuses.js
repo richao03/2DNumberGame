@@ -1,38 +1,17 @@
 
-function dropBonus(){
-  alert("made it")
-    // bonus = beam1.getFirstExists(false);
+function dropBonus1(answer){
+  console.log(answer)
+    beam1 = bonus1.getFirstExists(false);
+     beam1.reset(answer.body.x, answer.body.y);
+    game.physics.arcade.moveToXY(beam1,answer.body.x, 700 ,320);
 
 }
 
-function enemyHitsPlayer (player,bullet) {
-
-    bullet.kill();
-
-    live = lives.getFirstAlive();
-
-    if (live)
-    {
-        live.kill();
-    }
-
-    //  And create an explosion :)
-    var explosion = explosions.getFirstExists(false);
-    explosion.reset(player.body.x, player.body.y);
-    explosion.play('kaboom', 30, false, true);
-
-    // When the player dies
-    if (lives.countLiving() < 1)
-    {
-        player.kill();
-        enemyBullets.callAll('kill');
-
-        stateText.text=" GAME OVER \n Click to restart";
-        stateText.visible = true;
-
-        //the "click to restart" handler
-        game.input.onTap.addOnce(restart,this);
-    }
+function catchBonus1 (player,beam1) {
+    beam1.kill();
+    lazer1=true
+    console.log("caught lazer")
+    console.log(lazer1)
 
 }
 

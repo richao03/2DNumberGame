@@ -10,12 +10,41 @@ function dropBonus1(answer){
 function catchBonus1 (player,beam1) {
     beam1.kill();
     lazer1=true
-    console.log("caught lazer")
-    console.log(lazer1)
+
 
 }
 
 
+
+function collisionHandler (bullet, alien) {
+
+    var nextIsBonus1 = false;
+       if ( ts.countLiving() === beam1Bonus){
+        nextIsBonus1 = true
+    }
+
+    bullet.kill();
+
+    if(nextIsBonus1 === true){
+        dropBonus1(alien);
+        nextIsBonus1 =false
+    // bonus.reset(alien.body.x, alien.body.y);
+    // game.physics.arcade.moveToXY(bonus,0, alien.body.y,120);
+    //     alien.kill();
+    }
+
+    if(alien.health<=0){
+        alien.kill()
+    } else {
+        alien.health--
+    }
+
+   if (ts.countLiving() == 0){
+
+    game.state.start('level2');
+   }
+
+}
 
 function fireBullet(){
   if(lazer1 === false){
@@ -61,10 +90,9 @@ var lazer1 = false
 var ammo
 var fireRate;
 var bulletSpeed;
-
+var baddieHealth = 1
 function create() {
     game.physics.startSystem(Phaser.Physics.ARCADE);
-
 
     var bg = game.add.tileSprite(0, 0, 1920, 1920, 'background');
     bg.scale.y = 1.6
@@ -162,6 +190,7 @@ function createTs(){
             var alien = ts.create(x * 48, y * 50, 'ts');
             alien.anchor.setTo(0.5, 0.5);
             alien.body.moves = false;
+            alien.health = baddieHealth
         }
     }
     ts.x = 100;
@@ -181,28 +210,3 @@ function descend(){
 
 
 
-function collisionHandler (bullet, alien) {
-    var nextIsBonus = false;
-       if ( ts.countLiving() === beam1Bonus){
-        nextIsBonus = true
-    }
-
-    bullet.kill();
-
-    if(nextIsBonus === true){
-        dropBonus1(alien);
-        alien.kill();
-        nextIsBonus=false
-    // bonus.reset(alien.body.x, alien.body.y);
-    // game.physics.arcade.moveToXY(bonus,0, alien.body.y,120);
-    //     alien.kill();
-    } else {
-        alien.kill();
-    }
-
-
-   if (ts.countLiving() == 0){
-    alert("game over")
-   }
-
-}

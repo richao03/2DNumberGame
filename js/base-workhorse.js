@@ -21,7 +21,7 @@ var lazer1 = false
 var ammo
 var fireRate;
 var bulletSpeed;
-
+var baddieHealth = 1
 function create() {
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -121,6 +121,7 @@ function createTs(){
             var alien = ts.create(x * 48, y * 50, 'ts');
             alien.anchor.setTo(0.5, 0.5);
             alien.body.moves = false;
+            alien.health = baddieHealth
         }
     }
     ts.x = 100;
@@ -140,28 +141,3 @@ function descend(){
 
 
 
-function collisionHandler (bullet, alien) {
-    var nextIsBonus = false;
-       if ( ts.countLiving() === beam1Bonus){
-        nextIsBonus = true
-    }
-
-    bullet.kill();
-
-    if(nextIsBonus === true){
-        dropBonus1(alien);
-        alien.kill();
-        nextIsBonus=false
-    // bonus.reset(alien.body.x, alien.body.y);
-    // game.physics.arcade.moveToXY(bonus,0, alien.body.y,120);
-    //     alien.kill();
-    } else {
-        alien.kill();
-    }
-
-
-   if (ts.countLiving() == 0){
-    alert("game over")
-   }
-
-}

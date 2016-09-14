@@ -10,8 +10,7 @@ function dropBonus1(answer){
 function catchBonus1 (player,beam1) {
     beam1.kill();
     lazer1=true
-    console.log("caught lazer")
-    console.log(lazer1)
+
 
 }
 

@@ -1,42 +1,42 @@
 
-function dropBonus(){
-  alert("made it")
-    // bonus = beam1.getFirstExists(false);
+function dropBonus1(answer){
+  console.log(answer)
+    beam1 = bonus1.getFirstExists(false);
+     beam1.reset(answer.body.x, answer.body.y);
+    game.physics.arcade.moveToXY(beam1,answer.body.x, 700 ,320);
 
 }
 
-function enemyHitsPlayer (player,bullet) {
-
-    bullet.kill();
-
-    live = lives.getFirstAlive();
-
-    if (live)
-    {
-        live.kill();
-    }
-
-    //  And create an explosion :)
-    var explosion = explosions.getFirstExists(false);
-    explosion.reset(player.body.x, player.body.y);
-    explosion.play('kaboom', 30, false, true);
-
-    // When the player dies
-    if (lives.countLiving() < 1)
-    {
-        player.kill();
-        enemyBullets.callAll('kill');
-
-        stateText.text=" GAME OVER \n Click to restart";
-        stateText.visible = true;
-
-        //the "click to restart" handler
-        game.input.onTap.addOnce(restart,this);
-    }
+function catchBonus1 (player,beam1) {
+    beam1.kill();
+    lazer1=true
+    console.log("caught lazer")
+    console.log(lazer1)
 
 }
 
 
+
+function fireBullet(){
+  if(lazer1 === false){
+    ammo = bullets
+    fireRate = game.time.now + 350;
+    bulletSpeed = -400
+  } else if (lazer1===true){
+    ammo = bonus1
+    fireRate = game.time.now + 50;
+    bulletSpeed = -600
+  }
+    if (game.time.now > bulletTime){
+    bullet = ammo.getFirstExists(false)
+    if(bullet){
+        bullet.reset(player.x, player.y);
+        bullet.body.velocity.y = bulletSpeed;
+        bulletTime = fireRate
+    }
+    }
+
+}
 
 console.log("working")
 
@@ -55,6 +55,12 @@ var player;
 var ts;
 var cursors;
 var bulletTime = 0;
+var beam1;
+var beam1Bonus = 30 //Math.floor( Math.random()*15+5 )
+var lazer1 = false
+var ammo
+var fireRate;
+var bulletSpeed;
 
 function create() {
     game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -80,13 +86,14 @@ function create() {
     bullets.setAll('outOfBoundsKill', true);
     bullets.setAll('checkWorldBounds', true);
 
-    beam1 = game.add.group();
-    beam1.enableBody = true;
-    beam1.physicsBodyType=Phaser.Physics.ARCADE;
-    beam1.setAll('anchor.x', 0.5);
-    beam1.setAll('anchor.y', 1);
-    beam1.setAll('outOfBoundsKill', true);
-    beam1.setAll('checkWorldBounds', true);
+    bonus1 = game.add.group();
+    bonus1.enableBody = true;
+    bonus1.physicsBodyType = Phaser.Physics.ARCADE;
+    bonus1.createMultiple(30, 'beam1');
+    bonus1.setAll('anchor.x', 0.5);
+    bonus1.setAll('anchor.y', 1);
+    bonus1.setAll('outOfBoundsKill', true);
+    bonus1.setAll('checkWorldBounds', true);
 
 
 
@@ -130,8 +137,8 @@ function update() {
 
 
 
-        game.physics.arcade.overlap(bullets, ts, collisionHandler, null, this);
-
+game.physics.arcade.overlap(ammo, ts, collisionHandler, null, this);
+game.physics.arcade.overlap(bonus1, player, catchBonus1, null, this);
 
 }
 
@@ -144,16 +151,7 @@ function render() {
 }
 
 
-function fireBullet(){
-    if (game.time.now > bulletTime){
-    bullet = bullets.getFirstExists(false)
-    if(bullet){
-        bullet.reset(player.x, player.y);
-        bullet.body.velocity.y = -400;
-        bulletTime = game.time.now + 350;
-    }
-    }
-}
+
 
 
 function createTs(){
@@ -182,23 +180,26 @@ function descend(){
 }
 
 
-function collisionHandler (bullet, alien) {
 
-    var nextIsBonus = false
-    //  When a bullet hits an alien we kill them both
+function collisionHandler (bullet, alien) {
+    var nextIsBonus = false;
+       if ( ts.countLiving() === beam1Bonus){
+        nextIsBonus = true
+    }
 
     bullet.kill();
+
     if(nextIsBonus === true){
-        dropBonus();
+        dropBonus1(alien);
+        alien.kill();
+        nextIsBonus=false
     // bonus.reset(alien.body.x, alien.body.y);
     // game.physics.arcade.moveToXY(bonus,0, alien.body.y,120);
     //     alien.kill();
     } else {
         alien.kill();
     }
-    if ( ts.countLiving() === Math.floor( Math.random()*15+5 ) ){
-        nextIsBonus = true
-    }
+
 
    if (ts.countLiving() == 0){
     alert("game over")

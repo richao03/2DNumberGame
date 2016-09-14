@@ -1,4 +1,3 @@
-point, shoot, don't die.
 
-
+shoot, done die
 

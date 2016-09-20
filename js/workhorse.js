@@ -21,6 +21,10 @@ var lazer1 = false
 var ammo
 var fireRate;
 var bulletSpeed;
+var accelerate = 350;
+var drag = 1000;
+var maxSpeed = 400;
+var bank;
 
 function create() {
     game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -58,19 +62,18 @@ function create() {
 
     player = game.add.sprite(game.world.centerX, 675, 'player');
     player.scale.setTo(0.3,0.3)
-
-
-
     game.physics.enable(player, Phaser.Physics.ARCADE);
     player.body.collideWorldBounds=true;
+
+
+
     cursors = game.input.keyboard.createCursorKeys();
     fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
 }
 
 function update() {
-    player.body.velocity.x =0;
-    player.body.velocity.y =0;
+    player.body.velocity.x = 0;
     // if (cursors.up.isDown)
     // {
     //     player.body.velocity.y=-300
@@ -94,6 +97,8 @@ function update() {
         fireBullet();
     }
 
+bank = player.body.velocity.x / maxSpeed;
+player.angle = bank * 10;
 
 
 game.physics.arcade.overlap(ammo, ts, collisionHandler, null, this);

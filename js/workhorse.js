@@ -10,8 +10,11 @@ function preload() {
     game.load.image('bullet','/assets/bullet.png')
     game.load.image('beam1','/assets/1.png')
     game.load.image('explosion','assets/explosion.png')
+    game.load.image('enemyBullet', 'assets/enemyBullet.png')
 }
 
+var firingTimer = 0;
+var livingEnemies = []
 var player;
 var ts;
 var cursors;
@@ -27,6 +30,7 @@ var drag = 1000;
 var maxSpeed = 400;
 var bank;
 var explosions;
+var tsBullet;
 
 function create() {
     game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -41,6 +45,17 @@ function create() {
     ts.enableBody=true;
     ts.physicsBodyType = Phaser.Physics.ARCADE;
     createTs();
+
+   //  Blue enemy's bullets
+    tsBullet = game.add.group();
+    tsBullet.enableBody = true;
+    tsBullet.physicsBodyType = Phaser.Physics.ARCADE;
+    tsBullet.createMultiple(30, 'enemyBullet');
+    tsBullet.setAll('anchor.x', 0.5);
+    tsBullet.setAll('anchor.y', 0.5);
+    tsBullet.setAll('outOfBoundsKill', true);
+    tsBullet.setAll('checkWorldBounds', true);
+
 
     bullets = game.add.group();
     bullets.enableBody = true;
@@ -89,6 +104,7 @@ function create() {
 }
 
 function update() {
+
     player.body.velocity.x = 0;
     // if (cursors.up.isDown)
     // {
@@ -113,12 +129,18 @@ function update() {
         fireBullet();
     }
 
+      if (game.time.now > firingTimer)
+        {
+            enemyFires();
+        }
+
 bank = player.body.velocity.x / maxSpeed;
 player.angle = bank * 10;
 
 
 game.physics.arcade.overlap(ammo, ts, collisionHandler, null, this);
 game.physics.arcade.overlap(bonus1, player, catchBonus1, null, this);
+game.physics.arcade.overlap(tsBullet, player, gotHit, null, this);
 
 }
 
@@ -163,6 +185,9 @@ function descend(){
 
 function collisionHandler (bullet, alien) {
 
+
+var explosion = explosions.getFirstExists(false);
+
     var nextIsBonus = false;
 
        if ( ts.countLiving() === beam1Bonus){
@@ -173,28 +198,19 @@ function collisionHandler (bullet, alien) {
 
     if(nextIsBonus === true){
 
-        dropBonus1(alien);
-     var explosion = explosions.getFirstExists(false);
+    dropBonus1(alien);
     explosion.reset(alien.body.x + alien.body.halfWidth, alien.body.y + alien.body.halfHeight);
-    explosion.body.velocity.y = alien.body.velocity.y;
+    explosion.body.velocity.x = alien.body.velocity.x;
     explosion.lifespan = 150;
         alien.kill();
-
-
-
-
         nextIsBonus=false
-    // bonus.reset(alien.body.x, alien.body.y);
-    // game.physics.arcade.moveToXY(bonus,0, alien.body.y,120);
-    //     alien.kill();
+
     } else {
-
-
-        console.log("alien position", alien.body.x, alien.body.y)
-    var explosion = explosions.getFirstExists(false);
+    tsFire(alien);
     explosion.reset(alien.body.x + alien.body.halfWidth, alien.body.y + alien.body.halfHeight);
-    explosion.body.velocity.y = alien.body.velocity.y;
+    explosion.body.velocity.x = alien.body.velocity.x;
     explosion.lifespan = 150;
+    console.log(alien)
         alien.kill();
     }
 

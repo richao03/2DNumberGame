@@ -162,7 +162,7 @@ function update() {
         {
             fireBullet();
         }
-
+        // is it time for enemies to shoot at you?
         if (game.time.now > firingTimer)
         {
             enemyFires();

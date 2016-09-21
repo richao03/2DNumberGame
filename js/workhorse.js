@@ -11,7 +11,7 @@ var cursors;
 var bulletTime = 0;
 var beam1;
 var beam1Bonus = 30 //Math.floor( Math.random()*15+5 )
-var lazer1 = false
+
 var ammo
 var fireRate;
 var bulletSpeed;
@@ -214,7 +214,7 @@ dropBonus1: function (answer){
 
 catchBonus1:function  (player,beam1) {
     beam1.kill();
-    lazer1=true
+    shootApp.lazerOnOff=true
 
 
 },
@@ -252,10 +252,13 @@ enemyFires: function  () {
 
 },
 
-gotHit: function (){
-console.log('got hit!')
-},
-
+      gotHit: function(player, tsBullet) {
+            // tsBullet.kill();
+            // shootApp.playerHealth--
+            //     if (shootApp.playerHealth < 0) {
+            //         player.kill()
+            //     }
+        },
 
 tsFire: function (answer){
     console.log("fire")
@@ -269,11 +272,11 @@ tsFire: function (answer){
 //weapon
 
 fireBullet: function (){
-  if(lazer1 === false){
+  if(shootApp.lazerOnOff === false){
     ammo = bullets
     fireRate = this.game.time.now + 350;
     bulletSpeed = -400
-  } else if (lazer1===true){
+  } else if (shootApp.lazerOnOff===true){
     ammo = bonus1
     fireRate = this.game.time.now + 50;
     bulletSpeed = -600

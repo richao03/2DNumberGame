@@ -1,14 +1,23 @@
-var boot = function(game){
+var shootApp = {
+    lazerOnOff:false,
+    sineCurveOnOff:false,
+    playerLives:5,
+    playerHealth:5
+
+}
+
+shootApp.boot = function(game){
     console.log("you're in boot")
 }
 
 
 
-boot.prototype = {
+shootApp.boot.prototype = {
 
     init: function () {
 
-        this.stage.disableVisibilityChange = true;
+        this.stage.disableVisibilityChange = false;
+
 
  },
 
@@ -21,7 +30,10 @@ boot.prototype = {
         this.game.load.image('explosion','assets/explosion.png')
         this.game.load.image('enemyBullet', 'assets/enemyBullet.png')
         this.game.load.image('vs','/assets/v.png')
+        this.game.load.image('sineCurve', 'assets/2.png')
         this.game.load.image('us','/assets/u.png')
+
+        // this.game.load.image('us','/assets/u.png')
 
         //  Here we load the assets required for our preloader (in this case a background and a loading bar)
         this.game.load.image('loading', 'assets/gridsBackground.png');

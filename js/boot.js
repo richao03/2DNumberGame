@@ -1,6 +1,5 @@
 var shootApp = {
-    lazerOnOff:false,
-    sineCurveOnOff:false,
+    weapon:[],
     playerLives:5,
     playerHealth:5
 
@@ -24,6 +23,7 @@ shootApp.boot.prototype = {
     preload: function () {
         this.game.load.image('background','/assets/gridsBackground.png');
         this.game.load.image('player','/assets/w.png');
+        this.game.load.image('ps','/assets/p.png');
         this.game.load.image('ts','/assets/t.png');
         this.game.load.image('bullet','/assets/bullet.png')
         this.game.load.image('beam1','/assets/1.png')

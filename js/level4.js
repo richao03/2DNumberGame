@@ -1,5 +1,5 @@
-console.log("level2")
-var level2 = function(game) {
+console.log("level4")
+var level4 = function(game) {
 
 };
 
@@ -13,15 +13,15 @@ var beam1Bonus = Math.floor(Math.random() * 15 + 5)
 var beam2Bonus = Math.floor(Math.random() * 15 + 5)
 
 
-level2.prototype = {
+level4.prototype = {
 
         createTs: function() {
             for (var y = 0; y < 4; y++) {
                 for (var x = 0; x < 10; x++) {
-                    var alien = ts.create(x * 48, y * 50, 'vs');
+                    var alien = ts.create(x * 48, y * 50, 'ps');
                     alien.anchor.setTo(0.5, 0.5);
                     alien.body.moves = false;
-                    alien.health = 3
+                    alien.health = 7
                 }
             }
             ts.x = 100;
@@ -159,12 +159,15 @@ level2.prototype = {
 
 
         collisionHandler: function(bullet, alien) {
+
+
             var explosion = explosions.getFirstExists(false);
+
             var nextIsBonus2 = false;
             var nextIsBonus1 = false;
 
             if (ts.countLiving() === beam1Bonus) {
-                bullet.kill();
+                  bullet.kill()
                 explosion.reset(alien.body.x + alien.body.halfWidth, alien.body.y + alien.body.halfHeight);
                 explosion.body.velocity.x = alien.body.velocity.x;
                 explosion.lifespan = 150;
@@ -189,7 +192,7 @@ level2.prototype = {
 
 
             } else {
-                bullet.kill();
+                  bullet.kill()
                 this.tsFire(alien);
                 explosion.reset(alien.body.x + alien.body.halfWidth, alien.body.y + alien.body.halfHeight);
                 explosion.body.velocity.x = alien.body.velocity.x;
@@ -318,7 +321,7 @@ level2.prototype = {
                     bullet.body.velocity.y = -300;
                     bulletTime = fireRate
                     bullet.update = function() {
-                        bullet.body.x = player.x + Math.sin(this.game.time.now / 100) * 40;
+                        bullet.body.x = player.x + Math.sin(this.game.time.now / 100) * 100;
                     }
 
                 }

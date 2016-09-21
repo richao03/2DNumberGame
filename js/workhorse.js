@@ -10,7 +10,7 @@ var ts;
 var cursors;
 var bulletTime = 0;
 var beam1;
-var beam1Bonus = 30 //Math.floor( Math.random()*15+5 )
+var beam1Bonus = Math.floor( Math.random()*15+5 )
 
 var ammo
 var fireRate;
@@ -169,22 +169,22 @@ collisionHandler: function (bullet, alien) {
 
 var explosion = explosions.getFirstExists(false);
 
-    var nextIsBonus = false;
+    var nextIsBonus1 = false;
 
        if ( ts.countLiving() === beam1Bonus){
-        nextIsBonus = true
+        nextIsBonus1 = true
     }
 
     bullet.kill();
 
-    if(nextIsBonus === true){
+    if(nextIsBonus1 === true){
 
     this.dropBonus1(alien);
     explosion.reset(alien.body.x + alien.body.halfWidth, alien.body.y + alien.body.halfHeight);
     explosion.body.velocity.x = alien.body.velocity.x;
     explosion.lifespan = 150;
         alien.kill();
-        nextIsBonus=false
+        nextIsBonus1 = false
 
     } else {
     this.tsFire(alien);
@@ -214,7 +214,8 @@ dropBonus1: function (answer){
 
 catchBonus1:function  (player,beam1) {
     beam1.kill();
-    shootApp.lazerOnOff=true
+    shootApp.weapon=[]
+    shootApp.weapon.push("laser")
 
 
 },
@@ -272,11 +273,11 @@ tsFire: function (answer){
 //weapon
 
 fireBullet: function (){
-  if(shootApp.lazerOnOff === false){
+  if(shootApp.weapon[0] !== "laser"){
     ammo = bullets
     fireRate = this.game.time.now + 350;
     bulletSpeed = -400
-  } else if (shootApp.lazerOnOff===true){
+  } else if (shootApp.weapon[0] === "laser"){
     ammo = bonus1
     fireRate = this.game.time.now + 50;
     bulletSpeed = -600

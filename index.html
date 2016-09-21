@@ -1,18 +1,32 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script type="text/javascript" src="/build/js/phaser.min.js"></script>
+<script src="/js/boot.js"></script>
+<script src ="/js/workhorse.js"></script>
+<script src ="/js/level2.js"></script>
+<script src ="/js/level3.js"></script>
 	<meta charset="UTF-8" />
 	<title>testing</title>
-	<script type="text/javascript" src="/build/js/phaser.min.js"></script>
+
     <style type="text/css">
         body {
             margin: 0;
         }
     </style>
+    <div id="gameHere"></div>
+
+      <script>
+      (function() {
+        var game = new Phaser.Game(1200, 730, Phaser.AUTO, 'gameHere');
+        game.state.add("Boot",boot);
+        game.state.add("Workhorse",workhorse);
+        game.state.add("level2", level2)
+        game.state.add("level3", level3)
+        game.state.start("Boot");
+      })();
+    </script>
 </head>
 <body>
-<script src ="build/js/main.js"></script>
-
-
 </body>
 </html>

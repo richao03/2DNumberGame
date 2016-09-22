@@ -1,5 +1,5 @@
-console.log("level4")
-var level4 = function(game) {
+console.log("level5")
+var level5 = function(game) {
 var spreadShotBonus = 32
 var spreadShot
 var sineCurveBonus = 35
@@ -23,12 +23,11 @@ var maxSpeed = 400;
 var bank;
 var explosions;
 var tsBullet;
-
 };
 
 
 
-level4.prototype = {
+level5.prototype = {
     createTs: shootApp.methods.createTs,
     create: shootApp.methods.create,
     update: shootApp.methods.update,

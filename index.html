@@ -3,10 +3,11 @@
 <head>
 <script type="text/javascript" src="/build/js/phaser.min.js"></script>
 <script src="/js/boot.js"></script>
-<script src ="/js/workhorse.js"></script>
+<script src ="/js/level1.js"></script>
 <script src ="/js/level2.js"></script>
 <script src ="/js/level3.js"></script>
 <script src ="/js/level4.js"></script>
+<script src ="/js/level5.js"></script>
 	<meta charset="UTF-8" />
 	<title>testing</title>
 
@@ -21,10 +22,11 @@
       (function() {
         var game = new Phaser.Game(1200, 730, Phaser.AUTO, 'gameHere');
         game.state.add("Boot",shootApp.boot);
-        game.state.add("Workhorse",workhorse);
+        game.state.add("level1", level1);
         game.state.add("level2", level2)
         game.state.add("level3", level3)
         game.state.add("level4", level4)
+        game.state.add("level5", level5)
         game.state.start("Boot");
       })();
     </script>

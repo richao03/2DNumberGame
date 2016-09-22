@@ -1,17 +1,14 @@
 var shootApp = {
-    lazerOnOff: false,
-    sineCurveOnOff: false,
     playerLives: 5,
     playerHealth: 5,
     weapon: [],
-    baddies:['ts','ts','vs','us','ps'],
-    level : 0
+    baddies: ['ts', 'ts', 'vs', 'us', 'ps'],
+    level: 0
 }
 
 shootApp.boot = function(game) {
     console.log("you're in boot")
 
-    console.log("alienHealth", alienHealth)
 }
 
 
@@ -33,6 +30,7 @@ shootApp.boot.prototype = {
         this.game.load.image('bullet', '/assets/bullet.png')
         this.game.load.image('beam1', '/assets/1.png')
         this.game.load.image('sineCurve', 'assets/2.png')
+        this.game.load.image('spreadShot', 'assets/3.png')
         this.game.load.image('explosion', 'assets/explosion.png')
         this.game.load.image('enemyBullet', 'assets/enemyBullet.png')
 
@@ -46,7 +44,7 @@ shootApp.boot.prototype = {
 
         //  By this point the preloader assets have loaded to the cache, we've set the game settings
         //  So now let's start the real preloader going
-        this.game.state.start('Workhorse');
+        this.game.state.start('level1');
 
     }
 
@@ -61,7 +59,7 @@ shootApp.methods = {
                 var alien = ts.create(x * 48, y * 50, shootApp.baddies[shootApp.level]);
                 alien.anchor.setTo(0.5, 0.5);
                 alien.body.moves = false;
-                alien.health = shootApp.level+1
+                alien.health = shootApp.level + 1
 
 
             }
@@ -108,6 +106,15 @@ shootApp.methods = {
         bullets.setAll('outOfBoundsKill', true);
         bullets.setAll('checkWorldBounds', true);
 
+        bonus1 = this.game.add.group();
+        bonus1.enableBody = true;
+        bonus1.physicsBodyType = Phaser.Physics.ARCADE;
+        bonus1.createMultiple(30, 'beam1');
+        bonus1.setAll('anchor.x', 0.5);
+        bonus1.setAll('anchor.y', 1);
+        bonus1.setAll('outOfBoundsKill', true);
+        bonus1.setAll('checkWorldBounds', true);
+
         bonus2 = this.game.add.group();
         bonus2.enableBody = true;
         bonus2.physicsBodyType = Phaser.Physics.ARCADE;
@@ -117,14 +124,15 @@ shootApp.methods = {
         bonus2.setAll('outOfBoundsKill', true);
         bonus2.setAll('checkWorldBounds', true);
 
-        bonus1 = this.game.add.group();
-        bonus1.enableBody = true;
-        bonus1.physicsBodyType = Phaser.Physics.ARCADE;
-        bonus1.createMultiple(30, 'beam1');
-        bonus1.setAll('anchor.x', 0.5);
-        bonus1.setAll('anchor.y', 1);
-        bonus1.setAll('outOfBoundsKill', true);
-        bonus1.setAll('checkWorldBounds', true);
+        bonus3 = this.game.add.group();
+        bonus3.enableBody = true;
+        bonus3.physicsBodyType = Phaser.Physics.ARCADE;
+        bonus3.createMultiple(30, 'spreadShot');
+        bonus3.setAll('anchor.x', 0.5);
+        bonus3.setAll('anchor.y', 1);
+        bonus3.setAll('outOfBoundsKill', true);
+        bonus3.setAll('checkWorldBounds', true);
+
 
         //  An explosion pool
         explosions = this.game.add.group();
@@ -153,18 +161,18 @@ shootApp.methods = {
         if (ts.countLiving() == 0) {
             console.log("thats game, blouses")
             shootApp.level++
-            this.game.state.start('level'+shootApp.level);
+                this.game.state.start('level' + shootApp.level);
+        }
+
+        if(shootApp.level === 2){
+            sineCurveBonus = 20||21||23
+        }
+        if(shootApp.level===3){
+            spreadShotBonus = 32||33||31
         }
 
         player.body.velocity.x = 0;
-        // if (cursors.up.isDown)
-        // {
-        //     player.body.velocity.y=-300
-        // }
-        // else if (cursors.down.isDown)
-        // {
-        //     player.body.velocity.y= 300;
-        // }
+
 
         if (cursors.left.isDown) {
             player.body.velocity.x = -300;
@@ -187,6 +195,7 @@ shootApp.methods = {
         this.game.physics.arcade.overlap(ammo, ts, this.collisionHandler, null, this);
         this.game.physics.arcade.overlap(bonus2, player, this.catchbonus2, null, this);
         this.game.physics.arcade.overlap(bonus1, player, this.catchbonus1, null, this);
+        this.game.physics.arcade.overlap(bonus3, player, this.catchbonus3, null, this);
         this.game.physics.arcade.overlap(tsBullet, player, this.gotHit, null, this);
 
     },
@@ -207,8 +216,9 @@ shootApp.methods = {
 
     collisionHandler: function(bullet, alien) {
         var explosion = explosions.getFirstExists(false);
-      if (ts.countLiving() === beam1Bonus) {
-            console.log("bonus1 should drop now")
+        if (ts.countLiving() === beam1Bonus) {
+
+            console.log("bonus1 should drop now", this.dropbonus1)
             bullet.kill()
             explosion.reset(alien.body.x + alien.body.halfWidth, alien.body.y + alien.body.halfHeight);
             explosion.body.velocity.x = alien.body.velocity.x;
@@ -218,8 +228,9 @@ shootApp.methods = {
                     this.dropbonus1(alien)
                     alien.kill();
                 }
-            }
-      if (ts.countLiving() === sineCurveBonus) {
+        }
+        if (ts.countLiving() === sineCurveBonus) {
+            console.log("bonus2 should drop now", this.dropbonus2)
             bullet.kill()
             explosion.reset(alien.body.x + alien.body.halfWidth, alien.body.y + alien.body.halfHeight);
             explosion.body.velocity.x = alien.body.velocity.x;
@@ -230,39 +241,43 @@ shootApp.methods = {
                     alien.kill();
                 }
         }
+          if (ts.countLiving() === spreadShotBonus) {
+            console.log("bonus2 should drop now", this.dropbonus3)
             bullet.kill()
-            this.tsFire(alien);
             explosion.reset(alien.body.x + alien.body.halfWidth, alien.body.y + alien.body.halfHeight);
             explosion.body.velocity.x = alien.body.velocity.x;
             explosion.lifespan = 150;
             alien.health--
                 if (alien.health === 0) {
+                    this.dropbonus3(alien)
                     alien.kill();
+                }
+        }
+        bullet.kill()
+        this.tsFire(alien);
+        explosion.reset(alien.body.x + alien.body.halfWidth, alien.body.y + alien.body.halfHeight);
+        explosion.body.velocity.x = alien.body.velocity.x;
+        explosion.lifespan = 150;
+        alien.health--
+            if (alien.health === 0) {
+                alien.kill();
 
 
-      }
+            }
 
-},
+    },
 
 
     // bonuses
 
-    dropbonus2: function(answer) {
-        console.log("bonus2 should drop now")
-        sineBullet = bonus2.getFirstExists(false);
-        sineBullet.reset(answer.body.x, answer.body.y);
-        this.game.physics.arcade.moveToXY(sineBullet, answer.body.x, 700, 320);
 
-    },
 
     dropbonus1: function(answer) {
         laser = bonus1.getFirstExists(false);
         laser.reset(answer.body.x, answer.body.y);
         this.game.physics.arcade.moveToXY(laser, answer.body.x, 700, 320);
-
+         console.log("this is dropbonus1", laser)
     },
-
-
 
     catchbonus1: function(player, beam1) {
         beam1.kill();
@@ -270,14 +285,32 @@ shootApp.methods = {
         shootApp.weapon.push("laser")
     },
 
+    dropbonus2: function(answer) {
+        sineBullet = bonus2.getFirstExists(false);
+        sineBullet.reset(answer.body.x, answer.body.y);
+        this.game.physics.arcade.moveToXY(sineBullet, answer.body.x, 700, 320);
+        console.log("did bonus2 drop?", sineBullet)
+    },
 
     catchbonus2: function(player, sineCurve) {
         sineCurve.kill();
         shootApp.weapon = []
         shootApp.weapon.push("sineBullet")
-
     },
 
+    dropbonus3: function(answer) {
+
+        spreadShotBullet = bonus3.getFirstExists(false);
+        spreadShotBullet.reset(answer.body.x, answer.body.y);
+        this.game.physics.arcade.moveToXY(spreadShotBullet, answer.body.x, 700, 320);
+        console.log("bonus3 should drop now", spreadShotBullet)
+    },
+
+    catchbonus3: function(player, spreadShot) {
+        spreadShot.kill();
+        shootApp.weapon = []
+        shootApp.weapon.push("spreadShot")
+    },
 
     //enemy
 
@@ -343,23 +376,40 @@ shootApp.methods = {
             ammo = bonus2
             fireRate = this.game.time.now + 50;
             bulletSpeed = -600
+        } else if (shootApp.weapon[0] === "spreadShot") {
+            ammo = bonus3
+            fireRate = this.game.time.now + 50;
+            bulletSpeed = -600
+
         }
         if (this.game.time.now > bulletTime) {
 
             bullet = ammo.getFirstExists(false)
-            if (ammo !== bonus2) {
+            if (shootApp.weapon.length === 0) {
                 bullet.reset(player.x, player.y);
                 bullet.body.velocity.y = bulletSpeed;
                 bulletTime = fireRate
+            }
+            if (ammo == bonus1) {
+                bullet.reset(player.x, player.y);
+                bullet.body.velocity.y = bulletSpeed;
+                bulletTime = fireRate
+
             } else if (ammo == bonus2) {
                 bullet.reset(player.x, player.y);
                 bullet.body.velocity.y = -300;
                 bulletTime = fireRate
-                bullet.update = function() {
                     bullet.body.x = player.x + Math.sin(this.game.time.now / 100) * 100;
-                }
+
+
+            } else if (ammo == bonus3) {
+                bullet.reset(player.x, player.y);
+                bullet.body.velocity.y = bulletSpeed;
+                bulletTime = fireRate
 
             }
+
+
         }
     }
 

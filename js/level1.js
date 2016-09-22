@@ -1,8 +1,16 @@
-console.log("workhorse")
-var workhorse = function(game){
+console.log("level1")
+var level1 = function(game){
 
 };
 
+
+var spreadShotBonus
+var spreadShot
+var sineCurveBonus
+var sineCurve
+var frequency = 70;
+var spread = 60;
+var ammo;
 var firingTimer = 0;
 var livingEnemies = []
 var player;
@@ -11,8 +19,6 @@ var cursors;
 var bulletTime = 0;
 var beam1;
 var beam1Bonus = 30
-var alienHealth = 1;
-var ammo
 var fireRate;
 var bulletSpeed;
 var accelerate = 350;
@@ -22,8 +28,7 @@ var bank;
 var explosions;
 var tsBullet;
 
-
-workhorse.prototype = {
+level1.prototype = {
         createTs: shootApp.methods.createTs,
         create: shootApp.methods.create,
         update: shootApp.methods.update,

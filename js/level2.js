@@ -1,9 +1,7 @@
 console.log("level2")
 var level2 = function(game) {
 
-};
-
-var sineCurveBonus = 35
+var sineCurveBonus = 30
 var sineCurve
 var frequency = 70;
 var spread = 60;
@@ -15,9 +13,7 @@ var ts;
 var cursors;
 var bulletTime = 0;
 var beam1;
-var beam1Bonus = 30
-var alienHealth = 1;
-var ammo
+var beam1Bonus = 35
 var fireRate;
 var bulletSpeed;
 var accelerate = 350;
@@ -27,9 +23,12 @@ var bank;
 var explosions;
 var tsBullet;
 
+};
 
 
-console.log("level 2 alienHealth", alienHealth)
+
+
+
 
 level2.prototype = {
     createTs: shootApp.methods.createTs,
